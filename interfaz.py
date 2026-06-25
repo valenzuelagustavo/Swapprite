@@ -23,11 +23,12 @@ def seleccionar_paleta():
 def verificar_listo():
     # Chequea que ambas rutas estén cargadas antes de habilitar el botón de procesar
     return lbl_img_path.cget("text") != "Ninguna imagen seleccionada" and \
-    lbl_paleta_path.cget("text") != "Ninguna paleta seleccionada"
+           lbl_paleta_path.cget("text") != "Ninguna paleta seleccionada"
 
 def ejecutar_proceso():
     ruta_img = lbl_img_path.cget("text")
     ruta_paleta = lbl_paleta_path.cget("text")
+    usar_dither = var_dithering.get() # Capturamos si el usuario tildó la opción
     
     # Pedimos al usuario dónde quiere guardar el resultado
     ruta_salida = filedialog.asksaveasfilename(
@@ -40,16 +41,16 @@ def ejecutar_proceso():
         return # El usuario canceló el guardado
 
     try:
-        # Llamamos a tu motor de reemplazo de paletas
-        procesar_sprite(ruta_img, ruta_paleta, ruta_salida)
+        # Llamamos a tu motor de reemplazo de paletas pasándole la opción de dithering
+        procesar_sprite(ruta_img, ruta_paleta, ruta_salida, usar_dithering=usar_dither)
         messagebox.showinfo("¡Éxito!", "El sprite fue re-colorizado y guardado correctamente.")
     except Exception as e:
         messagebox.showerror("Error", f"Hubo un problema al procesar:\n{e}")
 
 # --- Configuración de la Ventana Principal ---
 ventana = tk.Tk()
-ventana.title("Swapprite - Retro Dev")
-ventana.geometry("500x300")
+ventana.title("Swapprite - Retro Dev Tool")
+ventana.geometry("500x320") # Agrandamos un poquito el alto para que entre el checkbox
 ventana.resizable(False, False)
 ventana.config(padx=20, pady=20)
 
@@ -72,9 +73,14 @@ btn_paleta.pack(side="left")
 lbl_paleta_path = tk.Label(marco_paleta, text="Ninguna paleta seleccionada", fg="gray", wraplength=350)
 lbl_paleta_path.pack(side="left", padx=10)
 
+# --- Opción de Dithering ---
+var_dithering = tk.BooleanVar(value=False) # Arranca desactivado por defecto
+chk_dither = tk.Checkbutton(ventana, text="Aplicar Dithering (Floyd-Steinberg)", variable=var_dithering, font=("Arial", 10))
+chk_dither.pack(pady=5)
+
 # Botón Procesar (Inicia deshabilitado)
 btn_procesar = tk.Button(ventana, text="🔄 PROCESAR Y GUARDAR", font=("Arial", 12, "bold"), 
-                    bg="#4CAF50", fg="white", state="disabled", command=ejecutar_proceso, pady=10)
+                        bg="#4CAF50", fg="white", state="disabled", command=ejecutar_proceso, pady=10)
 btn_procesar.pack(side="bottom", fill="x", pady=10)
 
 ventana.mainloop()
