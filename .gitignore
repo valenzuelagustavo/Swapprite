@@ -1,0 +1,32 @@
+# Entornos virtuales
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Caché de Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Archivos de compilación (si a futuro usás PyInstaller para hacer un .exe)
+build/
+dist/
+*.spec
+
+# Configuración de editores (VS Code, PyCharm, etc.)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos del sistema operativo (thumbs de Windows, ocultos de Mac)
+Thumbs.db
+.DS_Store
+
+# (Opcional) Ignorar las imágenes de prueba para no saturar el repo
+# Si querés subir algunas de ejemplo, borrá estas líneas:
+*.png
+!ejemplo.png
+!resultado_ejemplo.png
