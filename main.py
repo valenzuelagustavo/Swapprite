@@ -62,7 +62,7 @@ def procesar_sprite(ruta_img_original, ruta_paleta_nueva, ruta_img_salida):
     for r, g, b in paleta_nueva_rgb:
         paleta_nueva_plana.extend([r, g, b])
         
-    paleta_nueva_plana += [0] * (768 - len(paleta_nueva_plana))
+    nueva_img.putpalette(paleta_nueva_plana)
     nueva_img.putpalette(paleta_nueva_plana)
 
     # 7. Guardar resultado
