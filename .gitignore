@@ -30,3 +30,6 @@ Thumbs.db
 *.png
 !ejemplo.png
 !resultado_ejemplo.png
+
+#Paletas
+*.gpl
